@@ -21,6 +21,6 @@ def runoob(req):
     views_str = "<a href='https://www.runoob.com/'>点击跳转</a>"
     #return render(req, 'runoob.html', context)
     #return render(req, 'runoob.html', {'hello':'Hello'})
-    return render(req, 'runoob.html', {'hello':'Hello', 'list':viewlist, 'dict':viewdict, 'vzero':0, 'view_str':views_str})
+    return render(req, 'runoob.html', {'hello':'Hello', 'list':viewlist, 'dict':viewdict, 'vzero':[], 'view_str':views_str})
 
 

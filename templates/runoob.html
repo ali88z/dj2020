@@ -1,8 +1,47 @@
+{% include "inclu.html" %}
 <h1> {{ hello }} </h1>
 <h1> {{ list.0 }} </h1>
 <h1> {{ dict.first }} </h1>
 <h1> {{ list | first | upper }} </h1>
 {# 有哪些过滤器？ zjwcheck #}
-<h1> {{ vzero | default:'not exist' }} </h1>
+<h1> {{ vzero | default:'empty' }} </h1>
 <h1> {{ view_str | safe }} </h1>
+{# ifequal/ifnotequal 标签 与 if 有什么区别？  zjwcheck #}
+<h1>
+    {% if list.1 == 'list2' %}
+        this is list2
+    {% elif list.1 == 'list3' %}
+        this is list3
+    {% else %}
+        this is not list2
+    {% endif %}
+</h1>
+<h1> test for(list) </h1>
+    {% for x in list reversed %}
+    <li> {{x}} </li>
+    {% endfor %}
+
+<h1> test for(dict) </h1>
+    {% for i,j in dict.items %}
+    {{ i }}---{{ j }}
+    {% endfor %}
+
+<h1> test for(forvar) </h1>
+{% for i in list %}
+<li>
+	{{ forloop.counter }}
+	{{ forloop.counter0 }}
+	{{ forloop.revcounter }}
+	{{ forloop.revcounter0 }}
+	{{ forloop.first }}
+	{{ forloop.last }}
+</li>
+{% endfor %}
+
+<h1> test for(empty) </h1>
+    {% for i,j in vzero.items %}
+    {{ i }}---{{ j }}
+	{% empty %}
+		vzero is empty
+    {% endfor %}
 
