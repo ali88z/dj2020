@@ -24,3 +24,11 @@ def runoob(req):
     return render(req, 'runoob.html', {'hello':'Hello', 'list':viewlist, 'dict':viewdict, 'vzero':[], 'view_str':views_str})
 
 
+def templatetag(req):
+    context = {}
+    context['hello'] = 'Hello world'
+    return render(req, 'templatetag.html', context)
+
+def bootstrap(req):
+    return render(req, 'bootstrap.html')
+

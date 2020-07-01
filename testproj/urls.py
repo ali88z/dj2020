@@ -22,5 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     #url(r'^$', views.hello),
     re_path(r'^$', views.hello),
-    re_path(r'runoob/', views.runoob),
+    re_path(r'^runoob/', views.runoob),
+    re_path(r'^templatetag/', views.templatetag),
+    re_path(r'bootstrap/', views.bootstrap, name='aaa'),
 ]

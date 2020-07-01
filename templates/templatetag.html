@@ -1,0 +1,12 @@
+{# 注意加这行 #}
+{% load mytags %}
+<h1> {{ hello }} </h1>
+<h1> {{ 11 | my_filter:11 }} </h1>
+<h1> {% my_tag1 4 5 6 %} </h1>
+{% my_html a1 a2 %}
+<br>
+
+{% load static %}
+<img src="{% static "images/logo.png" %}" alt="runoob-logo">
+
+<img src="/static/images/logo.png" alt="runoob-logo">
