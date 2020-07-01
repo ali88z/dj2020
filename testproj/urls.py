@@ -16,13 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,re_path
 from django.conf.urls import url
-from . import views
+from . import views,testdb
+#from . import views,testdb,search
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     #url(r'^$', views.hello),
     re_path(r'^$', views.hello),
-    re_path(r'^runoob/', views.runoob),
-    re_path(r'^templatetag/', views.templatetag),
-    re_path(r'bootstrap/', views.bootstrap, name='aaa'),
+    re_path(r'^runoob/$', views.runoob),
+    re_path(r'^templatetag/$', views.templatetag),
+    re_path(r'^bootstrap/$', views.bootstrap, name='aaa'),
+    re_path(r'^testdb/$', testdb.testdb, name='testdb'),
 ]
