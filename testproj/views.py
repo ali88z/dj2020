@@ -2,6 +2,9 @@ from django.http import HttpResponse
 from django.shortcuts import render
 
 def hello(req):
+    # req是HttpRequest，这里面包含请求的所有信息，如body,path,
+    # method等等
+    # response主要3种：HttpResponse(), render(), redirect()
     return HttpResponse("Hello World!")
 
 '''

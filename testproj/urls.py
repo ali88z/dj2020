@@ -16,8 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,re_path
 from django.conf.urls import url
-from . import views,testdb
-#from . import views,testdb,search
+from . import views,testdb,search
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,6 +24,11 @@ urlpatterns = [
     re_path(r'^$', views.hello),
     re_path(r'^runoob/$', views.runoob),
     re_path(r'^templatetag/$', views.templatetag),
+    # zjwcheck, what does name mean?
     re_path(r'^bootstrap/$', views.bootstrap, name='aaa'),
     re_path(r'^testdb/$', testdb.testdb, name='testdb'),
+    re_path(r'^search_get/$', search.search_get),
+    re_path(r'^search/$', search.search),
+    #url(r'^search_post/$', search.search_post),
+    re_path(r'^search_post/$', search.search_post),
 ]
