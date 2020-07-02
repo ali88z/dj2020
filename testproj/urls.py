@@ -15,20 +15,29 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,re_path
-from django.conf.urls import url
+from django.conf.urls import url,include
 from . import views,testdb,search
 
 urlpatterns = [
+    # path('xxx/')应该类似于re_path(r'^xxx/'), 没确认
     path('admin/', admin.site.urls),
     #url(r'^$', views.hello),
     re_path(r'^$', views.hello),
     re_path(r'^runoob/$', views.runoob),
+
     re_path(r'^templatetag/$', views.templatetag),
     # zjwcheck, what does name mean?
     re_path(r'^bootstrap/$', views.bootstrap, name='aaa'),
     re_path(r'^testdb/$', testdb.testdb, name='testdb'),
+
     re_path(r'^search_get/$', search.search_get),
     re_path(r'^search/$', search.search),
     #url(r'^search_post/$', search.search_post),
     re_path(r'^search_post/$', search.search_post),
+
+    # 有名分组与无名分组不能混用
+    re_path("^index2/(?P<year>[0-9]{4})/(?P<month>[0-9]{2})/$", views.index)    ,
+    re_path("^index/([0-9]{4})/([0-9]{2})/$", views.index),
+
+    re_path("^testurlinclude/", include("testurlinclude.urls")),
 ]

@@ -35,3 +35,7 @@ def templatetag(req):
 def bootstrap(req):
     return render(req, 'bootstrap.html')
 
+def index(req, year, month):
+    s = "index test "+year+" "+month
+    return HttpResponse(s)
+
