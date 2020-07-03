@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>菜鸟教程(runoob.com)</title>
+</head>
+<body>
+    {# zjw check #}
+    <a href="{% url 'r_reverse2' 20 %}">r_reverse2_test20</a>
+    <h1> click link to test </h1>
+    <form action="{% url 'r_reverse' %}" method="post">
+        {% csrf_token %}
+        <input type="text" name="q">
+        <input type="submit" value="Submit">
+    </form>
+ 
+    <p>{{ rlt }}</p>
+</body>
+</html>

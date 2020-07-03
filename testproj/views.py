@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render,redirect,reverse
 
 def hello(req):
     # req是HttpRequest，这里面包含请求的所有信息，如body,path,
@@ -39,3 +39,18 @@ def index(req, year, month):
     s = "index test "+year+" "+month
     return HttpResponse(s)
 
+def route_reverse(req):
+    ctx = {}
+    if 'q' in req.POST and req.POST['q'] == 'redirect':
+        #return redirect("/")
+        return redirect(reverse('default'))
+    elif 'q' in req.POST and req.POST['q'] == '10':
+        # reverse 无名分组
+        return redirect(reverse('r_reverse2', args=(10,)))
+    else:
+        ctx['rlt'] = "input redirect or 10 to test"
+        return render(req, 'route_reverse.html', ctx)
+
+def route_reverse2(req, month):
+    str = 'route_reverse2 ' + month
+    return HttpResponse(str)

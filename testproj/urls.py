@@ -22,11 +22,11 @@ urlpatterns = [
     # path('xxx/')应该类似于re_path(r'^xxx/'), 没确认
     path('admin/', admin.site.urls),
     #url(r'^$', views.hello),
-    re_path(r'^$', views.hello),
+    # zjwcheck, name can use reverse(name) to route to real url
+    re_path(r'^$', views.hello, name='default'),
     re_path(r'^runoob/$', views.runoob),
 
     re_path(r'^templatetag/$', views.templatetag),
-    # zjwcheck, what does name mean?
     re_path(r'^bootstrap/$', views.bootstrap, name='aaa'),
     re_path(r'^testdb/$', testdb.testdb, name='testdb'),
 
@@ -40,4 +40,8 @@ urlpatterns = [
     re_path("^index/([0-9]{4})/([0-9]{2})/$", views.index),
 
     re_path("^testurlinclude/", include("testurlinclude.urls")),
+    # zjw check reverse在模板和views里都可以用
+    re_path("^route_reverse/$", views.route_reverse, name='r_reverse'),
+    # zjw check reverse 无名分组在模板和views里都可以用
+    re_path("^route_reverse2/([0-9]{2})/$", views.route_reverse2, name='r_reverse2'),
 ]
