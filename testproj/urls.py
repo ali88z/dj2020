@@ -44,4 +44,6 @@ urlpatterns = [
     re_path("^route_reverse/$", views.route_reverse, name='r_reverse'),
     # zjw check reverse 无名分组在模板和views里都可以用
     re_path("^route_reverse2/([0-9]{2})/$", views.route_reverse2, name='r_reverse2'),
+    # zjw check reverse 有名分组在模板和views里都可以用
+    re_path("^route_reverse3/(?P<year>[0-9]{4})/$", views.route_reverse3, name='r_reverse3'),
 ]

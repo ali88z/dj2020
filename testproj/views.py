@@ -46,11 +46,18 @@ def route_reverse(req):
         return redirect(reverse('default'))
     elif 'q' in req.POST and req.POST['q'] == '10':
         # reverse 无名分组
-        return redirect(reverse('r_reverse2', args=(10,)))
+        return redirect(reverse('r_reverse2', args=(req.POST['q'],)))
+    elif 'q' in req.POST and req.POST['q'] == '2020':
+        # reverse 有名分组
+        return redirect(reverse('r_reverse3', kwargs={'year':req.POST['q']}))
     else:
-        ctx['rlt'] = "input redirect or 10 to test"
+        ctx['rlt'] = "input redirect or 10 or 2020 to test"
         return render(req, 'route_reverse.html', ctx)
 
 def route_reverse2(req, month):
     str = 'route_reverse2 ' + month
+    return HttpResponse(str)
+
+def route_reverse3(req, year):
+    str = 'route_reverse3 ' + year
     return HttpResponse(str)
