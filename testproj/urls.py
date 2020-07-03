@@ -39,7 +39,11 @@ urlpatterns = [
     re_path("^index2/(?P<year>[0-9]{4})/(?P<month>[0-9]{2})/$", views.index)    ,
     re_path("^index/([0-9]{4})/([0-9]{2})/$", views.index),
 
-    re_path("^testurlinclude/", include("testurlinclude.urls")),
+    # include时，前面的pattern最后不要加$，不然会警告，同时URL也工作不正常，如下是错误示例
+    # re_path("^testurlinclude/$", include(("testurlinclude.urls", 'testurlinclude'))),
+    re_path("^testurlinclude/", include(("testurlinclude.urls", 'testurlinclude'))),
+    re_path("^reverse_namespace/", include(("reverse_namespace.urls", "reverse_namespace"))),
+
     # zjw check reverse在模板和views里都可以用
     re_path("^route_reverse/$", views.route_reverse, name='r_reverse'),
     # zjw check reverse 无名分组在模板和views里都可以用
