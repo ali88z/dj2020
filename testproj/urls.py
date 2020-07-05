@@ -32,6 +32,7 @@ urlpatterns = [
 
     re_path(r'^search_get/$', search.search_get),
     re_path(r'^search/$', search.search),
+    # url比较旧了，新的都是re_path
     #url(r'^search_post/$', search.search_post),
     re_path(r'^search_post/$', search.search_post),
 

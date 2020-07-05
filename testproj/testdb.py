@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 
-from testModel.models import Test
+from testModel.models import Test,Contact,Tag
 
 gindex=0
 def testdb(req):
