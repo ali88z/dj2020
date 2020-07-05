@@ -29,6 +29,7 @@ urlpatterns = [
     re_path(r'^templatetag/$', views.templatetag),
     re_path(r'^bootstrap/$', views.bootstrap, name='aaa'),
     re_path(r'^testdb/$', testdb.testdb, name='testdb'),
+    re_path(r'^modelbook/$', testdb.modelbook),
 
     re_path(r'^search_get/$', search.search_get),
     re_path(r'^search/$', search.search),
