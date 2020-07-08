@@ -1,0 +1,53 @@
+其他
+数据库
+
+其他
+============================================================
+# user:zjw pass:jjjj
+python3 manage.py createsuperuser
+
+
+数据库
+============================================================
+1, 创建 MySQL 数据库( ORM 无法操作到数据库级别，只能操作到数据表)语法
+	create database 数据库名称 default charset=utf8; # 防止编码问题，指定为 utf8
+2, 在项目的 settings.py 文件中找到 DATABASES 配置项，将其信息修改为：
+	DATABASES = { 
+		'default': 
+		{ 
+			'ENGINE': 'django.db.backends.mysql',    # 数据库引擎
+			'NAME': 'runoob', # 数据库名称
+			'HOST': '127.0.0.1', # 数据库地址，本机 ip 地址 127.0.0.1 
+			'PORT': 3306, # 端口 
+			'USER': 'root',  # 数据库用户名
+			'PASSWORD': '123456', # 数据库密码
+		}  
+	}
+3, 在与 settings.py 同级目录下的 __init__.py 中引入模块和进行配置
+	import pymysql
+	pymysql.install_as_MySQLdb()
+4, 创建APP
+	python3 ./manage.py startapp app01
+5, models.py里添加Models, 一个类代表一张表
+	class Test(models.Model):
+		name = models.CharField(max_length=20)
+6, 在 settings.py 中找到INSTALLED_APPS这一项
+	INSTALLED_APPS = (
+		'django.contrib.admin',
+		.......
+		'django.contrib.staticfiles',
+		'TestModel',               # 添加此项
+	)
+7, migrate
+	python3 manage.py makemigrations testModel  # 让 Django 知道我们在我们的模型有一些变更
+	python3 manage.py migrate testModel   # 创建表结构
+
+
+============================================================
+============================================================
+============================================================
+============================================================
+============================================================
+============================================================
+============================================================
+============================================================
