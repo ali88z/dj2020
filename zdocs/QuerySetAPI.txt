@@ -1,0 +1,148 @@
+Models.objects虽然是Manager类型，但看Manager的代码，它其实拥有QuerySet的所有可用方法（不严谨的说法），因此可以将其当成QuerySet看待。
+
+https://docs.djangoproject.com/en/3.0/ref/models/querysets/#django.db.models.query.QuerySet
+QuerySet API
+    Methods that return new QuerySets
+        filter()
+        exclude()
+        annotate()
+        order_by()
+        reverse()
+        distinct()
+        values()
+        values_list()
+        dates()
+        datetimes()
+        none()
+        all()
+        union()
+        intersection()
+        difference()
+        select_related()
+        prefetch_related()
+        extra()
+        defer()
+        only()
+        using()
+        select_for_update()
+        raw()
+    Operators that return new QuerySets
+        AND (&)
+        OR (|)
+    Methods that do not return QuerySets
+        get()
+        create()
+        get_or_create()
+        update_or_create()
+        bulk_create()
+        bulk_update()
+        count()
+        in_bulk()
+        iterator()
+            With server-side cursors
+            Without server-side cursors
+        latest()
+        earliest()
+        first()
+        last()
+        aggregate()
+        exists()
+        update()
+        delete()
+        as_manager()
+        explain()
+    Field lookups
+        exact
+        iexact
+        contains
+        icontains
+        in
+        gt
+        gte
+        lt
+        lte
+        startswith
+        istartswith
+        endswith
+        iendswith
+        range
+        date
+        year
+        iso_year
+        month
+        day
+        week
+        week_day
+        quarter
+        time
+        hour
+        minute
+        second
+        isnull
+        regex
+        iregex
+    Aggregation functions
+        expressions
+        output_field
+        filter
+        **extra
+        Avg
+        Count
+        Max
+        Min
+        StdDev
+        Sum
+        Variance
+Query-related tools
+    Q() objects
+    Prefetch() objects
+    prefetch_related_objects()
+    FilteredRelation() objects
+
+
+
+下面这些不全是QuerySet，所有数据库的例子都放这
+=======================================================
+创建：
+    book = Book(title="菜鸟教程",price=300,publish="菜鸟出版社",pub_date="2008-8-8")
+    book.save()
+
+    # 与上面类似，但更简洁，推荐
+    books = Book.objects.create(title="如来神掌",price=200,publish="功夫出版社",pub_date="2010-10-10")
+
+过滤：
+    Test.objects.all()
+
+    print('# filter() 方法基于双下划线的模糊查询（exclude 同理）。注意：filter 中运算符号只能使用等于号 = ，不能使用大于号 > ，小于号 < ，等等其他符号。__in 用于读取区间，= 号后面为列表 。') 例子见testdb.py
+    books=Book.objects.filter(pk__in=[1,2]).delete()
+
+    books=models.Book.objects.all().delete()　　 # 删除成功
+
+    books = Book.objects.exclude(pk=5)
+    books = Book.objects.exclude(publish='菜鸟出版社', price=300)
+
+    # get() 方法用于查询符合条件的返回模型类的对象符合条件的对象只能为一个，如果符合筛选条件的对象超过了一个或者没有一个都会抛出错误，注意这个返回是Book类型
+    books = Book.objects.get(pk=5)
+
+查询部分字段：
+    print('# values() 方法用于查询部分字段的数据。返回的是 QuerySet 类型数据，类似于 list，里面不是模型类的对象，而是一个可迭代的字典序列，字典里的键是字段，值是数据。')
+    print('查询所有的id字段和price字段的数据')
+    books = Book.objects.values("pk","price")
+    print(books, type(books))
+    print(books[0]["price"],type(books)) # 得到的是第一条记录的price字段的数据
+
+    print('# values_list() 方法用于查询部分字段的数据。返回的是 QuerySet 类型数据，类似于 list，里面不是模型类的对象，而是一个个元组，元组里放的是查询字段对应的数据。')
+    # 查询所有的price字段和publish字段的数据
+    books = Book.objects.values_list("price","publish")
+    print(books, type(books))
+    print(books[0][0],type(books)) # 得到的是第一条记录的price字段的数据
+
+删除：
+    #books=models.Book.objects.delete()　 # 报错，因为不是对QuerySet操作
+    books=Book.objects.filter(pk__in=[1,2]).delete()
+
+更新：
+    #books = Book.objects.filter(pk__in=[7,8]).update(price=888)
+
+排序：
+    books = Book.objects.order_by("-price").reverse() # 5 1 2 3 4
