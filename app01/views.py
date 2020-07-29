@@ -21,6 +21,11 @@ def add_book2(request):
     print(book.__str__())
     return HttpResponse(book.__str__())
 
+# 表与表之间的关系可分为以下三种：
+# 一对多: 一个家庭有多个人，一般通过外键来实现。
+# 一对一: 一个人对应一个身份证号码，也是用外健，数据字段设置 unique，也就是OneToOneField
+# 多对多: 一个学生有多门课程，一个课程有很多学生，一般通过第三个表来实现关联，也就是ManyToManyField。
+
 # 关联管理器(对象调用)
 # 前提：
 # 多对多（双向均有关联管理器）
@@ -97,7 +102,79 @@ def add_book7(request):
     return HttpResponse("Success!")
 
 def add_book8(request):
+    caibook = models.Book.objects.filter(title='菜鸟教程').first()
+    renauthor = models.Author.objects.filter(name='任我行').first()
+    # book_set的类型也是Manager，和objects一样，两者都是继承自Manager
+    # app01.Book.None <class 'django.db.models.fields.related_descriptors.create_forward_many_to_many_manager.<locals>.ManyRelatedManager'>
+    print(renauthor.book_set, type(renauthor.book_set))
+    renauthor.book_set.add(caibook)
+    res = renauthor.book_set.all()
+    for i in res:
+        print(i.title)
+
+    #renauthor.book_set.remove(caibook)
+
+    #renauthor.book_set.clear()
     return HttpResponse("Success!")
 
 def add_book9(request):
+    print('Author与au_dtail是OneToOne类型')
+    print('正向')
+    author = models.Author.objects.filter(name="令狐冲").first()
+    res = author.au_detail.tel
+    print(res, type(res))
+
+    print('反向 AuthorDetail并没有author这个列，但因为Author与au_dtail是OneToOne关系，')
+    print('所以可以这样用')
+    addr = models.AuthorDetail.objects.filter(addr="黑木崖").first()
+    res = addr.author.name
+    print(res, type(res))
+
+    print('ManyToManyField 正向')
+    book = models.Book.objects.filter(title="菜鸟教程").first()
+    res = book.authors.all()
+    for i in res:
+        print(i.name, i.au_detail.tel)
+
+    print('反向 ')
+    author = models.Author.objects.filter(name="任我行").first()
+    res = author.book_set.all()
+    for i in res:
+        print(i.title)
+
+    print('基于双下划线的跨表查询')
+    print('一对多')
+    print('正向：属性名称__跨表的属性名称 反向：小写类名__跨表的属性名称')
+    res = models.Book.objects.filter(publish__name="明教出版社").values_list("title", "price")
+    for i in res:
+        print(i)
+
+    print('反向：通过 小写类名__跨表的属性名称（book__title，book__price） 跨表获取数据。')
+    res = models.Publish.objects.filter(name="明教出版社").values_list("book__title","book__price")
+    for i in res:
+        print(i)
+
+    print('多对多')
+    print('查询令狐冲出过的所有书籍的名字。')
+    print('正向：通过 属性名称__跨表的属性名称(authors__name) 跨表获取数据：')
+    res = models.Book.objects.filter(authors__name="令狐冲").values_list("title")
+    for i in res:
+        print(i)
+
+    print('反向：通过 小写类名__跨表的属性名称（book__title） 跨表获取数据：')
+    res = models.Author.objects.filter(name="令狐冲").values_list("book__title")
+    for i in res:
+        print(i)
+
+    print('一对一')
+    print('查询任我行的手机号。')
+    print('正向：通过 属性名称__跨表的属性名称(au_detail__tel) 跨表获取数据。')
+    res = models.Author.objects.filter(name="任我行").values_list("au_detail__tel")
+    for i in res:
+        print(i)
+
+    print('反向：通过 小写类名__跨表的属性名称（author__name） 跨表获取数据。')
+    res = models.AuthorDetail.objects.filter(author__name="任我行").values_list("tel")
+    for i in res:
+        print(i)
     return HttpResponse("Success!")
